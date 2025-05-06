@@ -61,6 +61,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    LogService logService = Get.find<LogService>();
+
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         final lightScheme =
@@ -75,6 +77,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         return GetMaterialApp(
           // 标题
           title: AppConstants.appName,
+          // 日志
+          enableLog: true,
+          logWriterCallback: (details, {isError = false}) {
+            logService.debug('GetX', details);
+          },
           // 关闭调试模式下的debug标签
           debugShowCheckedModeBanner: false,
           // 国际化
