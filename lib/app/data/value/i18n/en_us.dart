@@ -2,6 +2,18 @@
 class en_US {
   static Map<String, String> keys() {
     return {
+      // Properties
+      'ro.product.marketname': 'Market name',
+      'ro.product.name': 'Codename',
+      'ro.product.model': 'Model',
+      'ro.build.version.release': 'Android version',
+      'ro.system.build.version.incremental': 'Build version',
+      'ro.product.cpu.abi': 'ABI',
+      'ro.boot.slot_suffix': 'A/B Slot',
+      'ro.vndk.version': 'VNDK',
+      'ro.product.brand': 'Brand',
+      'ro.board.platform': 'CPU',
+
       'home': 'Home',
       'yes': 'Yes',
       'no': 'No',
@@ -37,16 +49,7 @@ class en_US {
       'deviceInfo': 'Device Info',
       'deviceSerial': 'Device Serial',
       'deviceStatus': 'Device Status',
-      'deviceMarketName': 'Market Name',
-      'deviceCodeName': 'Codename',
-      'deviceModel': 'Model',
-      'deviceAndroidVersion': 'Android Version',
-      'deviceKernelVersion': 'Kernel Version',
-      'deviceBuildVersion': 'Build Version',
-      'deviceAbi': 'ABI',
-      'deviceSlot': 'Slot',
-      'deviceVndk': 'VNDK',
-      'deviceBand': 'Band',
+      'kernelVersion': 'Kernel version',
       'batteryLevel': 'Battery Level',
       'refreshDeviceInfo': 'Refresh Device Info',
       'storage': 'Storage',
@@ -59,7 +62,7 @@ class en_US {
       'reconnect': 'Reconnect',
       'reconnectOffline': 'Reconnect Offline',
       'noFastbootInfoAvailable': 'No fastboot info available',
-      'deviceOffline': 'Device Offline'
+      'deviceOffline': 'Device Offline',
     };
   }
 }

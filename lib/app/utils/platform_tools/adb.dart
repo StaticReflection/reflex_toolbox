@@ -9,7 +9,7 @@ class Adb {
   final String _adbPath = ExecutableProvider.adbPath;
 
   Future<ExecuteResult> _execute(List<String> arguments) async {
-    ExecuteResult result = await executeWithCompute(_adbPath, arguments);
+    final result = executeWithCompute(_adbPath, arguments);
 
     return result;
   }
@@ -28,26 +28,21 @@ class Adb {
   }
 
   Future<List<DeviceInfo>> getDeviceList() async {
-    ExecuteResult result = await _execute(['devices']);
-    List<DeviceInfo> deviceList = [];
+    final result = await _execute(['devices']);
+    if (!result.success || result.output == null) return [];
 
-    if (result.success) {
-      List<String> lines = result.output!.split('\n');
-
-      for (var i = 1; i < lines.length; i++) {
-        List<String> splitLine = lines[i].trim().split('\t');
-
-        if (splitLine.length == 2) {
-          deviceList.add(
-            DeviceInfo(
-              serial: splitLine[0],
-              status: deviceStatusFromString(splitLine[1]),
-            ),
-          );
-        }
-      }
-    }
-    return deviceList;
+    return result.output!
+        .split('\n')
+        .skip(1)
+        .map((line) => line.trim().split('\t'))
+        .where((splitLine) => splitLine.length == 2)
+        .map(
+          (splitLine) => DeviceInfo(
+            serial: splitLine[0],
+            status: deviceStatusFromString(splitLine[1]),
+          ),
+        )
+        .toList();
   }
 
   //  shell

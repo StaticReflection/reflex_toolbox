@@ -46,10 +46,10 @@ class PlatformToolsService extends GetxService {
   Future<void> refreshDeviceList() async {
     _logService.debug(_tag, 'Refresh device list');
 
-    final adbDevices = await PlatformToolsUtil.adb.getDeviceList();
-    final fastbootDevices = await PlatformToolsUtil.fastboot.getDeviceList();
+    final adbDevices = PlatformToolsUtil.adb.getDeviceList();
+    final fastbootDevices = PlatformToolsUtil.fastboot.getDeviceList();
 
-    deviceList.value = [...adbDevices, ...fastbootDevices].toList();
+    deviceList.value = [...await adbDevices, ...await fastbootDevices].toList();
 
     _logService.trace(_tag, 'Device list: $deviceList');
 
@@ -95,17 +95,21 @@ class PlatformToolsService extends GetxService {
     final device = currentSelectedDevice.value;
     if (device == null) return;
     if (device.status.isAdbMode) {
-      await Future.wait([
-        AdbInfoExtension(this).getDeviceInfoProperties(device),
-        AdbInfoExtension(this).getBatteryLevel(device),
-        AdbInfoExtension(this).getenforce(device),
-        AdbInfoExtension(this).getKernelVersion(device),
-      ]);
+      getDeviceInfoProperties(device);
 
-      device.storageInfo = await getStorageInfo(device.serial);
-      device.memoryInfo = await getMemoryInfo(device.serial);
+      final batteryFuture = getBatteryLevel(device.serial, device.status);
+      final kernelFuture = getKernelVersion(device.serial);
+      final selinuxFuture = getenforce(device.serial);
+      final storageFuture = getStorageInfo(device.serial);
+      final memoryFuture = getMemoryInfo(device.serial);
+
+      device.batteryLevel = await batteryFuture;
+      device.kernelVersion = await kernelFuture;
+      device.selinuxMode = await selinuxFuture;
+      device.storageInfo = await storageFuture;
+      device.memoryInfo = await memoryFuture;
     } else {
-      device.fastbootInfo = await FastbootInfoExtension(this).getvarAll();
+      device.fastbootInfo = await getvarAll();
     }
     currentSelectedDevice.refresh();
   }

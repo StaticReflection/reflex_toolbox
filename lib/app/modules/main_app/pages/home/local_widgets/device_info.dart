@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reflex_toolbox/app/data/value/enum/device_status.dart';
 import 'package:reflex_toolbox/app/extensions/device_status.dart';
+import 'package:reflex_toolbox/app/global_widgets/device_status_widget.dart';
 import 'package:reflex_toolbox/app/modules/main_app/pages/home/controller.dart';
 import 'package:reflex_toolbox/app/modules/main_app/pages/home/local_widgets/battery_level_card.dart';
 import 'package:reflex_toolbox/app/modules/main_app/pages/home/local_widgets/system_resources_card.dart';
@@ -63,53 +65,26 @@ class _AdbInfo extends GetView<HomePageController> {
           child: ListView(
             children: [
               _DetailRow(
-                title: 'deviceBand'.tr,
-                value: controller.currentSelectedDevice.value?.band,
-              ),
-              _DetailRow(
                 title: 'deviceSerial'.tr,
                 value: controller.currentSelectedDevice.value?.serial,
-              ),
-              _DetailRow(
-                title: 'deviceModel'.tr,
-                value: controller.currentSelectedDevice.value?.model,
-              ),
-              _DetailRow(
-                title: 'deviceBuildVersion'.tr,
-                value: controller.currentSelectedDevice.value?.buildVersion,
-              ),
-              _DetailRow(
-                title: 'deviceAbi'.tr,
-                value: controller.currentSelectedDevice.value?.abi,
               ),
               _DetailRow(
                 title: 'selinux'.tr,
                 value: controller.currentSelectedDevice.value?.selinuxMode,
               ),
               _DetailRow(
-                title: 'deviceCodeName'.tr,
-                value: controller.currentSelectedDevice.value?.codeName,
-              ),
-              _DetailRow(
-                title: 'deviceAndroidVersion'.tr,
-                value: controller.currentSelectedDevice.value?.androidVersion,
-              ),
-              _DetailRow(
-                title: 'deviceKernelVersion'.tr,
+                title: 'kernelVersion'.tr,
                 value: controller.currentSelectedDevice.value?.kernelVersion,
               ),
-              _DetailRow(
-                title: 'deviceSlot'.tr,
-                value: controller.currentSelectedDevice.value?.slot,
-              ),
-              _DetailRow(
-                title: 'deviceVndk'.tr,
-                value: controller.currentSelectedDevice.value?.vndk,
-              ),
-              _DetailRow(
-                title: 'cpu'.tr,
-                value: controller.currentSelectedDevice.value?.cpu,
-              ),
+              ...controller.currentSelectedDevice.value?.properties
+                      .map(
+                        (property) => _DetailRow(
+                          title: property.key.tr,
+                          value: property.value,
+                        ),
+                      )
+                      .toList() ??
+                  [],
             ],
           ),
         ),
@@ -123,34 +98,32 @@ class _FastbootInfo extends GetView<HomePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return controller.currentSelectedDevice.value?.fastbootInfo == null
-          ? Center(child: Text("noFastbootInfoAvailable".tr))
-          : ListView.builder(
-            addAutomaticKeepAlives: false,
-            addRepaintBoundaries: false,
-            itemCount:
-                controller.currentSelectedDevice.value?.fastbootInfo?.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _DetailRow(
-                title:
-                    controller
-                        .currentSelectedDevice
-                        .value
-                        ?.fastbootInfo?[index]
-                        .name
-                        .tr ??
-                    'unknown'.tr,
-                value:
-                    controller
-                        .currentSelectedDevice
-                        .value
-                        ?.fastbootInfo?[index]
-                        .value,
-              );
-            },
+    return DeviceStatusWidget(
+      status: [DeviceStatus.fastboot],
+      child: ListView.builder(
+        addAutomaticKeepAlives: false,
+        addRepaintBoundaries: false,
+        itemCount: controller.currentSelectedDevice.value?.fastbootInfo?.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _DetailRow(
+            title:
+                controller
+                    .currentSelectedDevice
+                    .value
+                    ?.fastbootInfo?[index]
+                    .name
+                    .tr ??
+                'unknown'.tr,
+            value:
+                controller
+                    .currentSelectedDevice
+                    .value
+                    ?.fastbootInfo?[index]
+                    .value,
           );
-    });
+        },
+      ),
+    );
   }
 }
 
@@ -167,9 +140,7 @@ class _DeviceInfoHeader extends GetView<HomePageController> {
             Expanded(
               child: Obx(
                 () => Text(
-                  controller.currentSelectedDevice.value?.marketName ??
-                      controller.currentSelectedDevice.value?.model ??
-                      controller.currentSelectedDevice.value?.serial ??
+                  controller.currentSelectedDevice.value?.serial ??
                       'unknown'.tr,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),

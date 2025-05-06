@@ -1,5 +1,5 @@
+import 'package:reflex_toolbox/app/data/value/enum/device_status.dart';
 import 'package:reflex_toolbox/app/data/value/model/device_info.dart';
-import 'package:reflex_toolbox/app/data/value/model/execute_result.dart';
 import 'package:reflex_toolbox/app/data/value/model/memory_info.dart';
 import 'package:reflex_toolbox/app/data/value/model/storage_info.dart';
 import 'package:reflex_toolbox/app/services/platform_tools/service.dart';
@@ -7,69 +7,53 @@ import 'package:reflex_toolbox/app/utils/platform_tools/util.dart';
 
 extension AdbInfoExtension on PlatformToolsService {
   Future<String?> getprop(String serial, String prop) async {
-    ExecuteResult result = await PlatformToolsUtil.adb.shell(
-      serial,
-      'getprop $prop',
-    );
-
-    if (result.output == null) {
-      return null;
-    } else {
-      if (result.output!.isEmpty) {
-        return null;
-      } else {
-        return result.output;
-      }
-    }
+    final result = await PlatformToolsUtil.adb.shell(serial, 'getprop $prop');
+    return result.output?.isEmpty ?? true ? null : result.output;
   }
 
   Future<void> getDeviceInfoProperties(DeviceInfo device) async {
-    final props = <String, void Function(String?)>{
-      'ro.product.cpu.abi': (v) => device.abi = v,
-      'ro.build.version.release': (v) => device.androidVersion = v,
-      'ro.system.build.version.incremental': (v) => device.buildVersion = v,
-      'ro.product.name': (v) => device.codeName = v,
-      'ro.product.model': (v) => device.model = v,
-      'ro.boot.slot_suffix': (v) => device.slot = v,
-      'ro.vndk.version': (v) => device.vndk = v,
-      'ro.product.marketname': (v) => device.marketName = v,
-      'ro.product.brand': (v) => device.band = v,
-      'ro.board.platform': (v) => device.cpu = v,
-    };
-
     await Future.wait(
-      props.entries.map((e) async {
-        final value = await getprop(device.serial, e.key);
-        e.value(value);
+      device.properties.map((property) async {
+        property.value = await getprop(device.serial, property.key);
       }),
     );
   }
 
-  Future<void> getKernelVersion(DeviceInfo device) async {
-    final kernel = await PlatformToolsUtil.adb.shell(device.serial, 'uname -r');
-    device.kernelVersion = kernel.output;
+  Future<String?> getKernelVersion(String serial) async {
+    final result = await PlatformToolsUtil.adb.shell(serial, 'uname -r');
+    return result.output;
   }
 
-  Future<void> getBatteryLevel(DeviceInfo device) async {
-    final result = await PlatformToolsUtil.adb.shell(
-      device.serial,
-      'dumpsys battery | grep level',
-    );
-    if (result.success) {
-      final parts = result.output!.trim().split(': ');
-      device.batteryLevel = (parts.length == 2) ? int.tryParse(parts[1]) : null;
-    } else {
-      device.batteryLevel = null;
+  Future<int?> getBatteryLevel(String serial, DeviceStatus status) async {
+    if (status == DeviceStatus.device) {
+      final result = await PlatformToolsUtil.adb.shell(
+        serial,
+        'dumpsys battery',
+      );
+
+      if (!result.success) return null;
+
+      final levelMatch = RegExp(
+        r'^\s*level\s*:\s*(\d+)',
+        multiLine: true,
+      ).firstMatch(result.output ?? '');
+      return levelMatch != null ? int.tryParse(levelMatch.group(1)!) : null;
+    } else if (status == DeviceStatus.recovery) {
+      final result = await PlatformToolsUtil.adb.shell(
+        serial,
+        'cat /sys/class/power_supply/battery/capacity',
+      );
+
+      return int.tryParse(result.output ?? '');
     }
+
+    return null;
   }
 
-  Future<void> getenforce(DeviceInfo device) async {
-    final result = await PlatformToolsUtil.adb.shell(
-      device.serial,
-      'getenforce',
-    );
+  Future<String?> getenforce(String serial) async {
+    final result = await PlatformToolsUtil.adb.shell(serial, 'getenforce');
 
-    device.selinuxMode = result.output;
+    return result.output;
   }
 
   Future<StorageInfo?> getStorageInfo(String serial) async {

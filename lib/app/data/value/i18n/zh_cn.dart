@@ -2,6 +2,18 @@
 class zh_CN {
   static Map<String, String> keys() {
     return {
+      // Properties
+      'ro.product.marketname': '市场名称',
+      'ro.product.name': '代号',
+      'ro.product.model': '型号',
+      'ro.build.version.release': '安卓版本',
+      'ro.system.build.version.incremental': '构建版本',
+      'ro.product.cpu.abi': 'ABI',
+      'ro.boot.slot_suffix': 'A/B槽位',
+      'ro.vndk.version': 'VNDK',
+      'ro.product.brand': '厂商',
+      'ro.board.platform': 'CPU',
+
       'home': '首页',
       'yes': '是',
       'no': '否',
@@ -36,16 +48,7 @@ class zh_CN {
       'deviceInfo': '设备信息',
       'deviceSerial': '序列号',
       'deviceStatus': '设备状态',
-      'deviceMarketName': '市场名称',
-      'deviceCodeName': '机型代号',
-      'deviceModel': '型号',
-      'deviceAndroidVersion': '安卓版本',
-      'deviceKernelVersion': '内核版本',
-      'deviceBuildVersion': '构建版本',
-      'deviceAbi': 'ABI',
-      'deviceSlot': 'A/B槽',
-      'deviceVndk': 'VNDK',
-      'deviceBand': '品牌',
+      'kernelVersion': '内核版本',
       'power': '电量',
       'batteryLevel': '电量',
       'refreshDeviceInfo': '刷新设备信息',
@@ -59,7 +62,7 @@ class zh_CN {
       'reconnect': '重新连接',
       'reconnectOffline': '重新连接离线设备',
       'noFastbootInfoAvailable': '没有可用的fastboot信息',
-      'deviceOffline': '设备离线'
+      'deviceOffline': '设备离线',
     };
   }
 }

@@ -75,12 +75,7 @@ class SystemResourcesCard extends GetView<HomePageController> {
                 title: 'ram'.tr,
                 total:
                     controller.currentSelectedDevice.value?.memoryInfo?.total,
-                used:
-                    controller
-                        .currentSelectedDevice
-                        .value
-                        ?.memoryInfo
-                        ?.used,
+                used: controller.currentSelectedDevice.value?.memoryInfo?.used,
               ),
             ),
           ],
