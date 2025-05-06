@@ -15,16 +15,11 @@ class MainAppPageBar extends GetView<MainAppPageController> {
           child: MoveWindow(
             child: Padding(
               padding: EdgeInsets.only(left: 16),
-              child: Row(
-                children: [
-                  Text(
-                    AppConstants.appName,
-                    style: TextStyle(
-                      fontSize:
-                          Theme.of(context).textTheme.titleLarge?.fontSize,
-                    ),
-                  ),
-                ],
+              child: Text(
+                AppConstants.appName,
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+                ),
               ),
             ),
           ),
