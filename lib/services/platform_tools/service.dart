@@ -22,7 +22,7 @@ class PlatformToolsService extends GetxService {
   void onInit() {
     _logService = Get.find<LogService>();
 
-    autoRefreshDeviceList();
+    PlatformToolsUtil.adb.startServer();
 
     _logService.debug(_tag, 'Initialization completed');
 
@@ -37,10 +37,6 @@ class PlatformToolsService extends GetxService {
   void onClose() {
     PlatformToolsUtil.adb.killServer();
     super.onClose();
-  }
-
-  Future<void> autoRefreshDeviceList() async {
-    Timer.periodic(Duration(seconds: 3), (timer) => refreshDeviceList());
   }
 
   Future<void> refreshDeviceList() async {
@@ -74,11 +70,13 @@ class PlatformToolsService extends GetxService {
             ? await PlatformToolsUtil.adb.connect(ip)
             : await PlatformToolsUtil.adb.pair(ip, code);
     if (result.success) {
-      Get.dialog(PromptDialog(result.output!));
+      Get.dialog(PromptDialog(result.output));
     }
   }
 
   Future<void> powerAction(PowerActions action) async {
+    _logService.debug(_tag, 'Power action: ${action.name}');
+
     final device = currentSelectedDevice.value;
     if (device == null) return;
 
@@ -109,7 +107,7 @@ class PlatformToolsService extends GetxService {
       device.storageInfo = await storageFuture;
       device.memoryInfo = await memoryFuture;
     } else {
-      device.fastbootInfo = await getvarAll();
+      device.fastbootInfo = await getvarAll(device.serial);
     }
     currentSelectedDevice.refresh();
   }

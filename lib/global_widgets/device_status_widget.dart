@@ -37,7 +37,7 @@ class DeviceStatusWidget extends StatelessWidget {
         case DeviceStatus.offline:
           return buildErrorText('deviceOffline'.tr);
         case DeviceStatus.recovery:
-        case DeviceStatus.device:
+        case DeviceStatus.system:
           return buildErrorText('youNeedToRebootToFastboot'.tr);
         case DeviceStatus.unknown:
         default:

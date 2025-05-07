@@ -18,9 +18,10 @@ class HomePage extends GetView<HomePageController> {
         Expanded(
           child: DeviceStatusWidget(
             status: [
-              DeviceStatus.device,
-              DeviceStatus.fastboot,
+              DeviceStatus.system,
               DeviceStatus.recovery,
+              DeviceStatus.fastbootd,
+              DeviceStatus.bootloader,
             ],
             child: DeviceInfo(),
           ),

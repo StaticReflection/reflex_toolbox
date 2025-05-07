@@ -6,7 +6,7 @@ import 'package:reflex_toolbox/data/value/model/storage_info.dart';
 
 class DeviceInfo {
   final String serial;
-  final DeviceStatus status;
+  DeviceStatus status;
 
   final List<Property> properties = <Property>[
     Property(key: 'ro.product.marketname'), // 市场名称: Redmi K50

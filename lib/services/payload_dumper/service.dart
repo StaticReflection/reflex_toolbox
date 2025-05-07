@@ -3,8 +3,8 @@ import 'package:reflex_toolbox/data/providers/executable.dart';
 import 'package:reflex_toolbox/data/value/model/execute_result.dart';
 import 'package:reflex_toolbox/data/value/model/partition.dart';
 import 'package:reflex_toolbox/services/app_config/service.dart';
+import 'package:reflex_toolbox/services/isolate_execute/service.dart';
 import 'package:reflex_toolbox/services/log/service.dart';
-import 'package:reflex_toolbox/utils/compute_execute/util.dart';
 
 class PayloadDumperService extends GetxService {
   late final LogService _logService;
@@ -25,16 +25,24 @@ class PayloadDumperService extends GetxService {
   }
 
   Future<ExecuteResult> _execute(List<String> arguments) async {
-    return await executeWithCompute(_payloadDumperPath, arguments);
+    String tag = _tag + arguments.toString();
+    await Get.delete(tag: tag);
+
+    ExecuteService service = await Get.putAsync<ExecuteService>(
+      () => ExecuteService().init(),
+      tag: arguments.toString(),
+    );
+
+    return service.startExecution(_payloadDumperPath, arguments);
   }
 
   Future<List<Partition>> getPartitionList(String filePath) async {
     ExecuteResult result = await _execute(['-l', filePath]);
     if (result.success == true) {
-      if (!result.output!.contains('Found partitions:\n')) return [];
+      if (!result.output.contains('Found partitions:\n')) return [];
 
       final partitionsRaw =
-          result.output!.split('Found partitions:\n').last.trim();
+          result.output.split('Found partitions:\n').last.trim();
       if (partitionsRaw.isEmpty) return [];
 
       final partitionList = partitionsRaw.split(', ');

@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:reflex_toolbox/data/providers/executable.dart';
 import 'package:reflex_toolbox/data/value/model/execute_result.dart';
+import 'package:reflex_toolbox/services/isolate_execute/service.dart';
 import 'package:reflex_toolbox/services/log/service.dart';
-import 'package:reflex_toolbox/utils/compute_execute/util.dart';
 
 class ScrcpyService extends GetxService {
   late final LogService _logService;
@@ -24,7 +24,15 @@ class ScrcpyService extends GetxService {
   }
 
   Future<ExecuteResult> _execute(List<String> arguments) async {
-    return await executeWithCompute(_scrcpyPath, arguments);
+    String tag = _tag + arguments.toString();
+    await Get.delete(tag: tag);
+
+    ExecuteService service = await Get.putAsync<ExecuteService>(
+      () => ExecuteService().init(),
+      tag: arguments.toString(),
+    );
+
+    return service.startExecution(_scrcpyPath, arguments);
   }
 
   Future screenCast(String serial) async {

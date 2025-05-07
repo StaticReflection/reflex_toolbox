@@ -99,7 +99,7 @@ class _FastbootInfo extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     return DeviceStatusWidget(
-      status: [DeviceStatus.fastboot],
+      status: [DeviceStatus.fastbootd, DeviceStatus.bootloader],
       child: ListView.builder(
         addAutomaticKeepAlives: false,
         addRepaintBoundaries: false,

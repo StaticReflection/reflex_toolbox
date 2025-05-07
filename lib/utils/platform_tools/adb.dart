@@ -1,6 +1,8 @@
+import 'package:get/get.dart';
 import 'package:reflex_toolbox/data/providers/executable.dart';
 import 'package:reflex_toolbox/data/value/enum/power_actions.dart';
-import 'package:reflex_toolbox/utils/compute_execute/util.dart';
+import 'package:reflex_toolbox/extensions/device_status.dart';
+import 'package:reflex_toolbox/services/isolate_execute/service.dart';
 import 'package:reflex_toolbox/data/value/enum/device_status.dart';
 import 'package:reflex_toolbox/data/value/model/device_info.dart';
 import 'package:reflex_toolbox/data/value/model/execute_result.dart';
@@ -9,9 +11,15 @@ class Adb {
   final String _adbPath = ExecutableProvider.adbPath;
 
   Future<ExecuteResult> _execute(List<String> arguments) async {
-    final result = executeWithCompute(_adbPath, arguments);
+    String tag = 'Adb$arguments';
+    await Get.delete(tag: tag);
 
-    return result;
+    ExecuteService service = await Get.putAsync<ExecuteService>(
+      () => ExecuteService().init(),
+      tag: arguments.toString(),
+    );
+
+    return service.startExecution(_adbPath, arguments);
   }
 
   Future startServer() async {
@@ -29,19 +37,21 @@ class Adb {
 
   Future<List<DeviceInfo>> getDeviceList() async {
     final result = await _execute(['devices']);
-    if (!result.success || result.output == null) return [];
-
-    return result.output!
+    if (!result.success) return [];
+    
+    return result.output
         .split('\n')
         .skip(1)
         .map((line) => line.trim().split('\t'))
         .where((splitLine) => splitLine.length == 2)
-        .map(
-          (splitLine) => DeviceInfo(
-            serial: splitLine[0],
-            status: deviceStatusFromString(splitLine[1]),
-          ),
-        )
+        .map((splitLine) {
+          final serial = splitLine[0];
+          final statusStr = splitLine[1];
+
+          DeviceStatus status = DeviceStatusExtension.fromString(statusStr);
+
+          return DeviceInfo(serial: serial, status: status);
+        })
         .toList();
   }
 
@@ -51,12 +61,12 @@ class Adb {
 
     if (RegExp(
       r"^adb\.exe: device '(.+)' not found$",
-    ).hasMatch(result.output!)) {
-      return ExecuteResult(success: false, output: null);
+    ).hasMatch(result.output)) {
+      return ExecuteResult(success: false, output: 'no device found');
     }
 
-    if (RegExp(r"^adb\.exe: device offline$").hasMatch(result.output!)) {
-      return ExecuteResult(success: false, output: null);
+    if (RegExp(r"^adb\.exe: device offline$").hasMatch(result.output)) {
+      return ExecuteResult(success: false, output: 'device offline');
     }
 
     return result;

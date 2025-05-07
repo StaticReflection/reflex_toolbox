@@ -1,16 +1,10 @@
 enum DeviceStatus {
   offline,
-  recovery,
-  fastboot,
-  unknown,
-  device,
   unauthorized,
+  system,
+  recovery,
   sideload,
-}
-
-DeviceStatus deviceStatusFromString(String statusStr) {
-  return DeviceStatus.values.firstWhere(
-    (status) => status.name == statusStr,
-    orElse: () => DeviceStatus.unknown,
-  );
+  fastbootd,
+  bootloader,
+  unknown,
 }
