@@ -63,6 +63,20 @@ class en_US {
       'reconnectOffline': 'Reconnect Offline',
       'noFastbootInfoAvailable': 'No fastboot info available',
       'deviceOffline': 'Device Offline',
+      'imageToolkit': 'Image Toolkit',
+      'payloadDumper': 'Payload Dumper',
+      'limitedFormatPrompt': 'Only allow .bin format',
+      'partitionName': 'Partition name',
+      'size': 'Szie',
+      'select': 'Select',
+      'selectAFile': 'Select a File',
+      'filePath': 'File path',
+      'youCanDragTheFileIntoThisWindow':
+          'You can drag the file into this window',
+      'dumpPartition': 'Dump partition',
+      'selectOutputDirectory': 'Select output directory',
+      'noPartitionSelected': 'No partition selected',
+      'dumpSelectedPartitions': 'Dump selected partitions',
     };
   }
 }

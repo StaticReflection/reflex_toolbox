@@ -12,4 +12,8 @@ class ExecutableProvider {
   static String get scrcpyPath {
     return '${AppConstants.binaryDirectory}/${AppConstants.scrcpyDirectory}/scrcpy';
   }
+
+  static String get payloadDumperPath {
+    return '${AppConstants.binaryDirectory}/${AppConstants.payloadDumperPath}/payload-dumper-go';
+  }
 }

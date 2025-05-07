@@ -6,14 +6,16 @@ import 'package:get/get.dart';
 import 'package:reflex_toolbox/app/data/value/i18n/app_languages.dart';
 import 'package:reflex_toolbox/app/routes/pages.dart';
 import 'package:reflex_toolbox/app/routes/routes.dart';
-import 'package:reflex_toolbox/app/services/app_config/service.dart';
 import 'package:reflex_toolbox/app/data/value/config/default.dart';
 import 'package:reflex_toolbox/app/data/value/constants/app_constants.dart';
+// Services
 import 'package:reflex_toolbox/app/services/app_storage/service.dart';
 import 'package:reflex_toolbox/app/services/app_window/service.dart';
 import 'package:reflex_toolbox/app/services/log/service.dart';
+import 'package:reflex_toolbox/app/services/payload_dumper/service.dart';
 import 'package:reflex_toolbox/app/services/platform_tools/service.dart';
 import 'package:reflex_toolbox/app/services/scrcpy/service.dart';
+import 'package:reflex_toolbox/app/services/app_config/service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +26,7 @@ void main() async {
   await Get.putAsync(() => ScrcpyService().init());
   await Get.putAsync(() => AppWindowService().init());
   await Get.putAsync(() => AppStorageService().init());
+  await Get.putAsync(() => PayloadDumperService().init());
 
   runApp(MyApp());
 }

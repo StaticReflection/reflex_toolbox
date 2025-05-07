@@ -14,6 +14,7 @@ class AppConfigService extends GetxService {
   RxBool isDarkMode = AppDefaultConfig.isDarkMode.obs;
   late RxString currentLanguage =
       AppDefaultConfig.fallbackLocale.toString().obs;
+  RxInt payloadDumperWorkerCount = 4.obs;
 
   Future<AppConfigService> init() async {
     return this;

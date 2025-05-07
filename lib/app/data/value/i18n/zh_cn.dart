@@ -63,6 +63,19 @@ class zh_CN {
       'reconnectOffline': '重新连接离线设备',
       'noFastbootInfoAvailable': '没有可用的fastboot信息',
       'deviceOffline': '设备离线',
+      'imageToolkit': '镜像工具集',
+      'payloadDumper': 'Payload Dumper',
+      'limitedFormatPrompt': '仅允许.bin格式',
+      'partitionName': '分区名',
+      'size': '大小',
+      'select': '选择',
+      'selectAFile': '选择一个文件',
+      'filePath': '文件地址',
+      'youCanDragTheFileIntoThisWindow': '你可以将文件拖入此窗口',
+      'dumpPartition': '提取分区',
+      'selectOutputDirectory': '选择输出目录',
+      'noPartitionSelected': '没有分区被选择',
+      'dumpSelectedPartitions': '提取选择的分区',
     };
   }
 }
