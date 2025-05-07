@@ -14,20 +14,42 @@ class zh_CN {
       'ro.product.brand': '厂商',
       'ro.board.platform': 'CPU',
 
+      // page
       'home': '首页',
+      'settings': '设置',
+      'imageToolkit': '镜像工具',
+      'payloadDumper': 'Payload Dumper',
+
+      // 通用
       'yes': '是',
       'no': '否',
       'cancel': '取消',
       'confirm': '确认',
       'ok': '确定',
       'prompt': '提示',
+      'pleaseSelectTheDeviceFirst': '请先选择设备',
+      'deviceStatusError': '设备状态错误',
+      'unknown': '未知',
+      'deviceOffline': '设备离线',
+      'size': '大小',
+      'select': '选择',
+      'selectAFile': '选择一个文件',
+      'filePath': '文件地址',
+
+      // 关闭app的弹窗
       'exitAppPrompt': '确定要退出吗？',
+
+      // 设置
       'darkMode': '深色模式',
-      'settings': '设置',
       'languages': '语言',
+
+      // 首页设备列表
       'deviceList': '设备列表',
       'refreshDeviceList': '刷新设备列表',
       'connectWirelessly': '无线连接',
+      'refreshDeviceInfo': '刷新设备信息',
+      'noFastbootInfoAvailable': '没有可用的fastboot信息',
+      // 无线连接
       'port': '端口',
       'connect': '连接',
       'connectWirelesslyPrompt': '请输入和IP地址:端口和配对码(可选)进行无线连接',
@@ -35,8 +57,13 @@ class zh_CN {
       'optional': '可选',
       'ipAddress': 'IP地址',
       'connectWirelesslyFailed': '无线连接失败',
+      'removeAll': '删除全部',
+      'reconnect': '重新连接',
+      'reconnectOffline': '重新连接离线设备',
+      'history': '历史',
+      // 投屏
       'screenCast': '投屏',
-      'pleaseSelectTheDeviceFirst': '请先选择设备',
+      // 电源操作
       'powerActions': '电源操作',
       'powerOff': '关机',
       'reboot': '重启',
@@ -44,33 +71,21 @@ class zh_CN {
       'rebootToRecovery': '重启到Recovery',
       'rebootToBootloader': '重启到Bootloader',
       'pleaseSelectTheDevice': '请选择设备',
-      'unknown': '未知',
+      // 设备信息
       'deviceInfo': '设备信息',
       'deviceSerial': '序列号',
       'deviceStatus': '设备状态',
       'kernelVersion': '内核版本',
       'power': '电量',
       'batteryLevel': '电量',
-      'refreshDeviceInfo': '刷新设备信息',
       'storage': '存储',
       'ram': '内存',
       'selinux': 'SELinux',
       'cpu': 'CPU',
-      'deviceStatusError': '设备状态错误',
-      'history': '历史',
-      'removeAll': '删除全部',
-      'reconnect': '重新连接',
-      'reconnectOffline': '重新连接离线设备',
-      'noFastbootInfoAvailable': '没有可用的fastboot信息',
-      'deviceOffline': '设备离线',
-      'imageToolkit': '镜像工具集',
-      'payloadDumper': 'Payload Dumper',
+
+      // payload dumper
       'limitedFormatPrompt': '仅允许.bin格式',
       'partitionName': '分区名',
-      'size': '大小',
-      'select': '选择',
-      'selectAFile': '选择一个文件',
-      'filePath': '文件地址',
       'youCanDragTheFileIntoThisWindow': '你可以将文件拖入此窗口',
       'dumpPartition': '提取分区',
       'selectOutputDirectory': '选择输出目录',
