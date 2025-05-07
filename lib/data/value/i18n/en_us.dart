@@ -96,6 +96,9 @@ class en_US {
       'selectOutputDirectory': 'Select Output Directory',
       'noPartitionSelected': 'No partition selected',
       'dumpSelectedPartitions': 'Dump selected partitions',
+
+      // partition manager
+      'partitionManager': 'Partition manager',
     };
   }
 }

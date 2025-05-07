@@ -3,6 +3,7 @@ import 'package:reflex_toolbox/modules/main_app/controller.dart';
 import 'package:reflex_toolbox/modules/main_app/pages/home/controller.dart';
 import 'package:reflex_toolbox/modules/main_app/pages/image_toolkit/controller.dart';
 import 'package:reflex_toolbox/modules/main_app/pages/image_toolkit/tabs/payload_dumper/controller.dart';
+import 'package:reflex_toolbox/modules/main_app/pages/partition_manager/controller.dart';
 import 'package:reflex_toolbox/modules/main_app/pages/settings/controller.dart';
 
 class MainAppPageBinding extends Bindings {
@@ -14,6 +15,10 @@ class MainAppPageBinding extends Bindings {
 
     Get.lazyPut<ImageToolkitPageController>(() => ImageToolkitPageController());
     Get.lazyPut<PayloadDumperTabController>(() => PayloadDumperTabController());
+
+    Get.lazyPut<PartitionManagerPageController>(
+      () => PartitionManagerPageController(),
+    );
 
     Get.lazyPut<SettingsPageController>(() => SettingsPageController());
   }

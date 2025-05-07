@@ -91,6 +91,9 @@ class zh_CN {
       'selectOutputDirectory': '选择输出目录',
       'noPartitionSelected': '没有分区被选择',
       'dumpSelectedPartitions': '提取选择的分区',
+
+      // 分区管理
+      'partitionManager': '分区管理',
     };
   }
 }
