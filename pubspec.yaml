@@ -13,16 +13,21 @@ dependencies:
   file_picker: ^10.1.2
   flutter:
     sdk: flutter
+  flutter_rust_bridge: 2.9.0
   get: ^4.7.2
   intl: ^0.20.2
   logger: ^2.5.0
   path: ^1.9.1
+  rust_lib_reflex_toolbox:
+    path: rust_builder
   shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true

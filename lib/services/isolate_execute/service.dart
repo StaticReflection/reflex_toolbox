@@ -36,7 +36,7 @@ class ExecuteService extends GetxService {
       ]);
 
       final result = await _receivePort!.first;
-      
+
       isRunning.value = false;
       _cleanup();
 

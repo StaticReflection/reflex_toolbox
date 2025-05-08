@@ -1,14 +1,15 @@
 import 'dart:ui';
-
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reflex_toolbox/data/value/i18n/app_languages.dart';
-import 'package:reflex_toolbox/routes/pages.dart';
-import 'package:reflex_toolbox/routes/routes.dart';
 import 'package:reflex_toolbox/data/value/config/default.dart';
 import 'package:reflex_toolbox/data/value/constants/app_constants.dart';
-// Services
+import 'package:reflex_toolbox/routes/pages.dart';
+import 'package:reflex_toolbox/routes/routes.dart';
+// 螃蟹
+import 'package:reflex_toolbox/rust/frb_generated.dart';
+// 服务
 import 'package:reflex_toolbox/services/app_storage/service.dart';
 import 'package:reflex_toolbox/services/app_window/service.dart';
 import 'package:reflex_toolbox/services/log/service.dart';
@@ -18,6 +19,8 @@ import 'package:reflex_toolbox/services/scrcpy/service.dart';
 import 'package:reflex_toolbox/services/app_config/service.dart';
 
 void main() async {
+  await RustLib.init();
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await Get.putAsync(() => LogService().init());

@@ -38,7 +38,7 @@ class Adb {
   Future<List<DeviceInfo>> getDeviceList() async {
     final result = await _execute(['devices']);
     if (!result.success) return [];
-    
+
     return result.output
         .split('\n')
         .skip(1)

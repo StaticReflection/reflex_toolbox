@@ -6,6 +6,4 @@ extension FastbootInfoExtension on PlatformToolsService {
   Future<List<FastbootInfo>> getvarAll(String serial) async {
     return await PlatformToolsUtil.fastboot.getvar(serial, 'all');
   }
-
-  
 }

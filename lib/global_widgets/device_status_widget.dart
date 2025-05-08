@@ -32,7 +32,7 @@ class DeviceStatusWidget extends StatelessWidget {
       if (status.contains(device.status)) {
         return child;
       }
-      
+
       switch (device.status) {
         case DeviceStatus.offline:
           return buildErrorText('deviceOffline'.tr);
