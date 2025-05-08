@@ -25,7 +25,10 @@ class ScrcpyService extends GetxService {
 
   Future<ExecuteResult> _execute(List<String> arguments) async {
     String tag = _tag + arguments.toString();
-    await Get.delete(tag: tag);
+    
+    if (Get.isRegistered(tag: tag)) {
+      await Get.delete(tag: tag);
+    }
 
     ExecuteService service = await Get.putAsync<ExecuteService>(
       () => ExecuteService().init(),
