@@ -32,7 +32,7 @@ class ScrcpyService extends GetxService {
 
     ExecuteService service = await Get.putAsync<ExecuteService>(
       () => ExecuteService().init(),
-      tag: arguments.toString(),
+      tag: tag,
     );
 
     return service.startExecution(_scrcpyPath, arguments);

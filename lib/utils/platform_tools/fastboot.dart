@@ -19,7 +19,7 @@ class Fastboot {
 
     ExecuteService service = await Get.putAsync<ExecuteService>(
       () => ExecuteService().init(),
-      tag: arguments.toString(),
+      tag: tag,
     );
 
     return service.startExecution(_fastbootPath, arguments);

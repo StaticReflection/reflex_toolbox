@@ -19,10 +19,10 @@ class PlatformToolsService extends GetxService {
   final currentSelectedDevice = Rxn<DeviceInfo>();
 
   @override
-  void onInit() {
+  void onInit() async {
     _logService = Get.find<LogService>();
 
-    PlatformToolsUtil.adb.startServer();
+    await PlatformToolsUtil.adb.startServer();
 
     _logService.debug(_tag, 'Initialization completed');
 

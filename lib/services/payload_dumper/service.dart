@@ -33,7 +33,7 @@ class PayloadDumperService extends GetxService {
 
     ExecuteService service = await Get.putAsync<ExecuteService>(
       () => ExecuteService().init(),
-      tag: arguments.toString(),
+      tag: tag,
     );
 
     return service.startExecution(_payloadDumperPath, arguments);

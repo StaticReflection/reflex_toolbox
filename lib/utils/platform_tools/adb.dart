@@ -19,10 +19,10 @@ class Adb {
 
     ExecuteService service = await Get.putAsync<ExecuteService>(
       () => ExecuteService().init(),
-      tag: arguments.toString(),
+      tag: tag,
     );
 
-    return service.startExecution(_adbPath, arguments);
+    return await service.startExecution(_adbPath, arguments);
   }
 
   Future startServer() async {
