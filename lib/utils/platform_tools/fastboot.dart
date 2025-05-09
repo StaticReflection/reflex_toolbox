@@ -53,10 +53,14 @@ class Fastboot {
   Future<DeviceStatus> getFastbootMode(String serial) async {
     var result = await getvar(serial, 'is-userspace');
 
-    if (result.first.value == 'yes') {
-      return DeviceStatus.fastbootd;
+    if (result.isNotEmpty) {
+      if (result.first.value == 'yes') {
+        return DeviceStatus.fastbootd;
+      } else {
+        return DeviceStatus.bootloader;
+      }
     } else {
-      return DeviceStatus.bootloader;
+      return DeviceStatus.unknown;
     }
   }
 
